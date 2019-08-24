@@ -1,0 +1,13 @@
+.table-content {
+    width: 1550px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+td {
+    /*width: 100px;*/
+}
+
+.td-date {
+	width: 48px;
+}

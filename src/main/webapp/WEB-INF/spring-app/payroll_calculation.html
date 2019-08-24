@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Payroll</title>
+  
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css'>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+  <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+
+</head>
+
+<body>
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Hotel Elena</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" th:href="@{/payroll/calculation}" style="margin-right:12px;">Employee Payroll</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/payroll/reports}" style="margin-right:12px;">History Report</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/employee/registration}" style="margin-right:12px;">Employee Entry</a>
+      </li>
+      <!--<li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>-->
+    </ul>
+  </div>
+</nav>
+
+<div class="col-lg-6">
+		<div class="col-lg-3">
+			<input class="form-control" type="date" style="width:180px;" id="date_from">
+		</div>
+		<div class="col-lg-3">
+			<button class="btn btn-primary" id="payroll_date_btn">Submit Button</button>
+		</div>
+	</div>
+	<div class="col-lg-6">
+	</div>
+	<br/>
+
+  <div class="table-content">
+        <table class="table table-borded table-striped " id="table-list">
+            <thead class="table-dark">
+                <tr>
+                    <td>Firstname</td>
+                    <td>Lastname</td>
+                    <td>Position</td>
+                    <td>Daily Rate</td>
+                    <td class="td-date">MON</td>
+                    <td class="td-date">TUE</td>
+                    <td class="td-date">WED</td>
+                    <td class="td-date">THU</td>
+                    <td class="td-date">FRI</td>
+                    <td class="td-date">SAT</td>
+                    <td style="width:48px;">Work Hours</td>
+                    <td>Gross Pay</td>
+                    <td>C.A (HE)</td>
+                    <td>O.T (Hrs)</td>
+                    <td>U.T/Late</td>
+                    <td>Net Pay</td>
+                    <td style="display:none;">Employee ID#</td>
+                </tr>
+            </thead>
+            <tbody id="tbody_list">
+                <tr style="display:none;">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>Php 0.00</td>
+					<td class="td-date"></td>
+					<td class="td-date"></td>
+					<td class="td-date"></td>
+					<td class="td-date"></td>
+					<td class="td-date"></td>
+					<td class="td-date"></td>
+					<td>0</td>
+					<td style="font-weight:bold;">Php 0.00</td>
+					<td>Php 0.00</td>
+					<td></td>
+					<td>Php 0.00</td>
+					<td style="font-weight:bold;">Php 0.00</td>
+					<td style="display:none;"></td>
+					<td name="buttons"><div class="btn-group pull-right"><button id="bEdit" type="button" class="btn btn-sm btn-default" onclick="rowEdit(this);" style="display: block;"><span class="glyphicon glyphicon-pencil"> </span></button><button id="bElim" type="button" class="btn btn-sm btn-default" onclick="rowElim(this);" style="display: block;"><span class="glyphicon glyphicon-trash"> </span></button><button id="bAcep" type="button" class="btn btn-sm btn-default" style="display: none;" onclick="rowAcep(this);"><span class="glyphicon glyphicon-ok"> </span></button><button id="bCanc" type="button" class="btn btn-sm btn-default" style="display: none;" onclick="rowCancel(this);"><span class="glyphicon glyphicon-remove"> </span></button></div></td>
+				</tr>
+            </tbody>
+        </table>
+        <button class="btn btn-primary" id="add" style="float:left;"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Add New Members</button>
+		<button class="btn btn-primary" id="save_btn" style="float:right;"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Save Records</button>
+    </div>
+    <br/><br/>
+    <div id="add_success" class="alert alert-danger"></div>
+
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/js/bootstrap.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
+
+<script th:src="@{/assets/js/script.js}"></script>
+<script th:src="@{/assets/js/bignumber.js}"></script>
+<script th:src="@{/assets/js/action.btn.js}"></script>
+
+</body>
+</html>

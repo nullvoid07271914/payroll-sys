@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings
+	xmlns="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_0.xsd"
+	version="2.0">
+
+	<named-query name="PayrollReport.findEmployeePayrollFromDates" result-class="com.source.record.entities.PayrollReport">
+		<query>SELECT
+					EMPLOYEE.employee_id,
+					EMPLOYEE.firstname,
+					EMPLOYEE.lastname,
+					EMPLOYEE.position,
+					PAY.payroll_id,
+					PAY.cash_advanced,
+					PAY.daily_rate,
+					PAY.gross_pay,
+					PAY.net_pay,
+					PAY.overtime_hours,
+					PAY.undertime_late,
+					PAY.total_work_hours,
+					WORKS.work_date,
+					WORKS.work_hours
+					FROM
+						(SELECT * FROM employee_tbl WHERE status = 1) EMPLOYEE,
+						(SELECT * FROM payroll_tbl WHERE date_from = DATE('2019-08-26') AND date_to = DATE('2019-08-31')) PAY,
+						(SELECT * FROM work_hours_date_tbl WHERE work_date >= DATE('2019-08-26') AND work_date <= DATE('2019-08-31')) WORKS
+					WHERE
+						EMPLOYEE.employee_id = PAY.employee_id
+						AND PAY.employee_id = WORKS.employee_id
+							ORDER BY EMPLOYEE.lastname ASC</query>
+	</named-query>
+
+</entity-mappings>
