@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class Sample {
 
 	public static void main(String[] args) {
-		try (Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@10.0.2.11:1521:RM", "RM01", "ACNiBENS123")) {
+		try (Connection conn = DriverManager.getConnection("", "", "")) {
 
             if (conn != null) {
                 System.out.println("Connected to the database!");
